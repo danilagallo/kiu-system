@@ -1,6 +1,8 @@
 # Kiu System
 
 Ejercicio de compañía aérea.
+- Hice reporte detallado por consola, con fake data preparada de paquetes.
+- Hice que se agregaran paquetes para despachar uno por uno para casos de unit testing.
 
 ## Uso
 
