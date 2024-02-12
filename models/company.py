@@ -1,6 +1,7 @@
 import json
 
 from fake_data import packages
+from models.client import Client
 from models.package import Package
 
 
@@ -16,7 +17,10 @@ class Company:
     def add_bulk_to_aircraft(self):
         packages_ = json.loads(json.dumps(packages))
         for p in packages_:
-            self.packages.append(Package(**p))
+            client = Client(**p['owner'])
+            package = Package(**p)
+            package.client = client
+            self.packages.append(package)
 
     def report_by_date(self, date=None):
         if date is not None:
@@ -30,6 +34,7 @@ class Company:
                         number=number_of_packages)
         return 'You must specify a date for the report.'
 
+    # Detailed report to be viewed via console.
     def report_by_date_detailed(self, date=None):
         self.add_bulk_to_aircraft()
         if date is not None:
@@ -40,9 +45,9 @@ class Company:
             for package in packages_by_date:
                 print("\nCode: ", package.code)
                 print("Date: ", package.date)
-                print("Client Name: ", package.client['full_name'])
+                print("Client Name: ", package.client.full_name)
                 print("Client Passport Number: ",
-                      package.client['passport_number'])
+                      package.client.passport_number)
                 print("Origin: ", package.origin)
                 print("Destination: ", package.destination)
                 print("Description: ", package.description)
